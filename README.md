@@ -1,9 +1,11 @@
-# Desktop viewer PR evidence
+# Remote desktop viewer evidence
 
-Captured from the isolated viewer fixture at source commit 4fa37d382ff3802e0ca9e112e32e0dcbf55e1f8c, based on upstream 104fd17b8f7767e71ba3cf40f27f9c6279b507bd.
+Source: `ruigomeseu:fix/remote-local-vm-viewer` at `4fa37d382ff3802e0ca9e112e32e0dcbf55e1f8c`.
 
-- Before: browser reproduction of a loopback VNC URL pointing at an unused client port; no live desktop or user data is involved.
-- After: the production viewer connected to the fixture's synthetic 16x16 RFB desktop. Its red pixels are intentionally artificial; blank regions in phone captures reflect the synthetic desktop's limited repaint behavior.
-- Video: a short recording of the fixture exercising sidebar collapse/expansion and fullscreen.
+The after screenshots and controls recording show the running Local VM through the production viewer. Its owner authorized publishing these captures. Capture actions operated viewer controls only.
 
-The fixture uses a disposable home, fake Docker/SSH executables and a synthetic RFB server. Screenshots and video contain no real VM desktop, user account data or credentials.
+The phone screenshot uses a 390 x 844 Chromium viewport; it does not establish Safari or iPhone acceptance.
+
+The before screenshot is an isolated browser reproduction of an unreachable loopback URL.
+
+These review assets are separate from the feature branch.
