@@ -58,7 +58,8 @@ registerHooks({
     const result = nextLoad(url, context);
     if (url.endsWith('/local-vm-idle.ts')) {
       return { ...result, source: `import { readFileSync as readVmIdle } from 'node:fs';\n` +
-        String(result.source).replaceAll('checkedIdleMs(idleMs)', `(JSON.parse(readVmIdle(${JSON.stringify(state)}, 'utf8')).idleMs ?? checkedIdleMs(idleMs))`) };
+        String(result.source).replaceAll('checkedIdleMs(idleMs)', `(JSON.parse(readVmIdle(${JSON.stringify(state)}, 'utf8')).idleMs ?? checkedIdleMs(idleMs))`)
+          .replace('this.idleMs = idleMs;', `this.idleMs = JSON.parse(readVmIdle(${JSON.stringify(state)}, 'utf8')).idleMs ?? idleMs;`) };
     }
     if (url.endsWith('/local-vm-lease.ts')) {
       return { ...result, source: `import { readFileSync as readVmClock } from 'node:fs';\n` +

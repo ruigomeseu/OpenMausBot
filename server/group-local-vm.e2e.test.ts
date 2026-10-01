@@ -158,7 +158,11 @@ const stop = (id: string) => api("POST", `/api/groups/${id}/interrupt`, {});
 describe("Local VM stop and resume", () => {
   it("stops an idle shared VM without deleting it, remembers why across restart, and starts it from the bot panel", async () => {
     vmState({ containers: ["shared"], idleMs: 300 });
-    await api("PATCH", "/api/config", { localVm: { mode: "shared", idleTimeoutMinutes: 5 } });
+    await api("PATCH", "/api/config", { localVm: { mode: "shared" } });
+    // This fork predates upstream's configurable timer. Restart the isolated
+    // server to arm its fixed timer with the test-only shortened deadline.
+    await waitForExit(child, { signal: "SIGTERM" });
+    await startServer();
     const { bot } = await api("POST", "/api/bots", { name: "Resume fixture", computer: "vm" });
     await until(() => api("GET", "/api/local-computer"), s => s.container === "stopped");
     expect((await api("GET", "/api/local-computer")).stop_reason).toBe("idle");
